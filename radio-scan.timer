@@ -1,0 +1,9 @@
+[Unit]
+Description=Vice Radio library scan every 15 minutes
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=15min
+
+[Install]
+WantedBy=timers.target

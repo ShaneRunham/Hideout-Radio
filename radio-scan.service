@@ -1,0 +1,8 @@
+[Unit]
+Description=Vice Radio: measure new songs' loudness and rewrite the station playlist
+
+[Service]
+Type=oneshot
+Nice=19
+IOSchedulingClass=idle
+ExecStart=/usr/bin/python3 /home/shanerunham/homelab/radio/scan.py
