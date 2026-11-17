@@ -7,6 +7,8 @@ with ffmpeg's EBU R128 filter (cached in loudness.json), and library.m3u lists e
     annotate:liq_normalize_track_gain="-3.20 dB":/music/Artist/Album/01 - Song.flac
 Gain = -18 LUFS (ReplayGain's level) minus the song's loudness, capped so its true peak stays under -1 dBTP.
 library.m3u is only rewritten (in place, so Liquidsoap's file watch sees it) when its contents change.
+favourites.txt (one path per line, relative to the music folder, # comments) -> favourites.m3u the same way: the
+station slots one of them in every FAV_EVERY own songs (radio.liq), on top of their normal turn in the shuffle.
 """
 import json
 import os
@@ -18,6 +20,8 @@ MUSIC = "/mnt/storage/media/music"
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE = os.path.join(HERE, "loudness.json")
 PLAYLIST = os.path.join(HERE, "library.m3u")
+FAV_LIST = os.path.join(HERE, "favourites.txt")
+FAV_PLAYLIST = os.path.join(HERE, "favourites.m3u")
 AUDIO = (".flac", ".mp3", ".m4a", ".ogg", ".opus", ".wav")
 TARGET, CEILING = -18.0, -1.0
 
@@ -59,20 +63,31 @@ def main():
         with open(CACHE + ".tmp", "w") as f:
             json.dump(cache, f, indent=0)
         os.replace(CACHE + ".tmp", CACHE)
-    lines = []
-    for rel in files:
+    def entry(rel):
         c = cache.get(rel)
         gain = min(TARGET - c["lufs"], CEILING - c["peak"]) if c else 0.0
-        lines.append(f'annotate:liq_normalize_track_gain="{gain:+.2f} dB":/music/{rel}')
-    text = "\n".join(lines) + "\n"
+        return f'annotate:liq_normalize_track_gain="{gain:+.2f} dB":/music/{rel}'
+    write(PLAYLIST, [entry(rel) for rel in files])
     try:
-        old = open(PLAYLIST).read()
+        favs = [x.strip() for x in open(FAV_LIST) if x.strip() and not x.lstrip().startswith("#")]
+    except OSError:
+        favs = []
+    missing = [x for x in favs if x not in files]
+    for x in missing:
+        print(f"favourites.txt: not in the library: {x}", flush=True)
+    write(FAV_PLAYLIST, [entry(rel) for rel in favs if rel in files])
+
+
+def write(path, lines):
+    text = "\n".join(lines) + "\n" if lines else ""
+    try:
+        old = open(path).read()
     except OSError:
         old = None
     if text != old:
-        with open(PLAYLIST, "w") as f:   # in place: keeps the inode Liquidsoap watches
+        with open(path, "w") as f:   # in place: keeps the inode Liquidsoap watches
             f.write(text)
-        print(f"library.m3u: {len(lines)} songs", flush=True)
+        print(f"{os.path.basename(path)}: {len(lines)} songs", flush=True)
 
 
 if __name__ == "__main__":

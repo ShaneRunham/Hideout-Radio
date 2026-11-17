@@ -1,0 +1,3 @@
+# Vice Radio favourites: one of these plays after every FAV_EVERY (radio.liq) shuffled own songs, as well as in the
+# normal shuffle. One path per line, relative to /mnt/storage/media/music. scan.py turns this into favourites.m3u.
+Kool & The Gang/Fresh/02 - Fresh.flac

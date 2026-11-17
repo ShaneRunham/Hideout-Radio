@@ -12,6 +12,7 @@ settings.log.level := 3
 settings.request.metadata_decoders.recode.exclude := [...settings.request.metadata_decoders.recode.exclude(), "lyrics", "unsyncedlyrics"]
 
 LOCAL_SONGS = 4     # own songs between visits to an internet station
+FAV_EVERY = 20      # one favourite (favourites.txt, via scan.py) after this many shuffled own songs
 LIVE_SONGS = 2      # full songs played on the station (after joining the one already playing)
 FADE = 6.
 
@@ -24,7 +25,11 @@ def station_name(name, s) =
 end
 
 # Whole library shuffled, every song once per round before any repeat; picks up added/removed files
-local = playlist(id="local", mode="randomize", reload_mode="watch", "/radio/library.m3u")
+own = playlist(id="local", mode="randomize", reload_mode="watch", "/radio/library.m3u")
+# Shane's current favourites (2026-11-17: Kool & The Gang - Fresh) on top of their turn in the shuffle; an empty
+# favourites list is never ready, so rotate just keeps playing the shuffle
+favs = playlist(id="favourites", mode="randomize", reload_mode="watch", "/radio/favourites.m3u")
+local = rotate(weights=[FAV_EVERY, 1], [own, favs])
 local = normalize_track_gain(local)
 local = tag("local", local)
 
