@@ -1,8 +1,8 @@
-# 📻 Vice Radio
+# 📻 VICE Radio
 
-<img src="https://raw.githubusercontent.com/ShaneRunham/ShaneRunham/main/screens/vice-radio/phone.jpg" alt="Vice Radio playing on the phone remote" width="32%">
+<img src="https://raw.githubusercontent.com/ShaneRunham/ShaneRunham/main/screens/vice-radio/phone.jpg" alt="Vice Radio playing on the phone remote" width="30%" align="right">
 
-A 24/7 80s station running on [Liquidsoap](https://www.liquidsoap.info/). It shuffles my own music library and drops
+**Vice Radio** is a 24/7 80s station running on [Liquidsoap](https://www.liquidsoap.info/). It shuffles my own music library and drops
 in a block from a free 80s internet station every few songs, with 6-second crossfades between tracks.
 
 ### How it plays
