@@ -1,8 +1,8 @@
-# 📻 VICE Radio
+# 📻 Hideout Radio
 
-<img src="https://raw.githubusercontent.com/ShaneRunham/ShaneRunham/main/screens/vice-radio/phone.jpg" alt="Vice Radio playing on the phone remote" width="30%" align="right">
+<img src="https://raw.githubusercontent.com/ShaneRunham/ShaneRunham/main/screens/hideout-radio/phone.jpg" alt="Hideout Radio on the phone remote" width="30%" align="right">
 
-**Vice Radio** is a 24/7 80s station running on [Liquidsoap](https://www.liquidsoap.info/). It shuffles my own music library and drops
+**Hideout Radio** is a 24/7 80s station running on [Liquidsoap](https://www.liquidsoap.info/). It shuffles my own music library and drops
 in a block from a free 80s internet station every few songs, with 6-second crossfades between tracks.
 
 ### How it plays
@@ -21,7 +21,7 @@ in a block from a free 80s internet station every few songs, with 6-second cross
 
 ### Where it plays
 
-On the TV ([VICE Home](https://github.com/ShaneRunham/VICE-Home)), on the dashboards and the phone remote, in Discord
-([VICE Bot](https://github.com/ShaneRunham/VICE-Bot)) and anywhere on my Tailscale network.
+On the TV ([Hideout Home](https://github.com/ShaneRunham/Hideout-Home)), on the dashboards and the phone remote, in Discord
+([Hideout Bot](https://github.com/ShaneRunham/Hideout-Bot)) and anywhere on my Tailscale network.
 
 > A cleaned copy of my private repo, updated automatically.
